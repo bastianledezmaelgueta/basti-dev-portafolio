@@ -1,15 +1,41 @@
+---
+import { Icon } from "astro-icon/components";
+import BashMessage from "./BashMessage.astro";
+---
+
 <div class="mx-auto rounded-lg border-umgreen-600 border-2 bg-black/50 text-justify">
-    <div class="border-umgreen-600 border-b-2">
+  <!-- Título de la ventana -->
+  <div class="border-umgreen-600 border-b-2">
     <h1 class="font-noto text-md sm:text-lg md:text-xl lg:text-2xl font-normal text-umgreen-500 mx-1 my-2">
-        WelcomeConsole.exe
-        
+      WelcomeConsole.exe
     </h1>
-    </div>
+  </div>
+  
+  <!-- Consola -->
+  <div>
+    <BashMessage text="User" user="user" />
+  </div>
 
-    <p class="font-noto text-md sm:text-lg md:text-xl lg:text-2xl font-normal text-white my-1 mx-1">
-        <span class="text-pink-700" > BastianDev $ </span> Hola bienvenidos, esta carta de presentacion al internet sobre el avances y cosas que me encuentro realizanzando
-        como programador ,ingeniero de sotware o simplemente como entusiasta de las cieciaas de la computacion 
+  <!-- Input -->
+  <div class="text-left border-umgreen-600 border-t-2 flex items-center px-2 py-1">
+    <p class="font-noto text-md sm:text-lg md:text-xl lg:text-2xl font-normal text-umgreen-500 mr-2">
+      <span class="text-pink-700">User $</span>
     </p>
-    </p> 
+    <input
+      type="text"KF
+      placeholder="/help"
+      class="bg-transparent placeholder:text-white flex-grow focus:outline-none hover:outline-none outline-none ring-0  shadow-inner text-white"
+    />
+    <button class="text-umgreen-500 ml-2 flex items-center justify-center">
+      <span class="block sm:m-1 md:m-1">
+        <Icon name="astro" size="1.5rem" /> 
+      </span>
+      <!-- Texto del botón -->
+      <span
+        class="hidden md:hidden lg:block text-sm sm:text-base md:text-lg lg:text-xl font-medium transition-all ease-in-out"
+      >
+      Hola
+      </span>
+    </button>
+  </div>
 </div>
-
