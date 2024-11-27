@@ -3,14 +3,38 @@ import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 
 import { Icon } from 'astro-icon/components';
-import NavBar from '../components/NavBar.astro';
-import Background from '../components/Background.astro';
+import RoundedImage from '../components/RoundedImage.astro';
+import ButtonContact from '../components/ButtonContact.astro';
+import Bash from '../components/Bash.astro';
+
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Home">
 <main>
-	<NavBar></NavBar>
-    <Background>
-	</Background>
+	<section id="hero" class="py-10 sm:py-24 text-center">
+		<div class="mx-auto max-w-4xl">
+		  <Bash></Bash>
+		 <!-- <RoundedImage src="/assets/dotDager.png" src2="/assets/imagen2.png" /> -->
+	  
+		  <!-- Botones de contacto -->
+		  <div class="flex justify-center items-center space-x-4 mt-6 sm:mt-16">
+			<ButtonContact Text="Dot Dager" Link="https://www.youtube.com/@DotDager">
+			  <slot name="icon"></slot>
+			</ButtonContact>
+			<ButtonContact Text="dager.32" Link="https://www.instagram.com/dager.32/">
+			  <slot name="icon"></slot>
+			</ButtonContact>
+			<ButtonContact Text="Dager Server" Link="https://discord.com/invite/4NFk6TamAB">
+			  <slot name="icon"></slot>
+			</ButtonContact>
+			<ButtonContact Text="MarianoVilla" Link="https://github.com/MarianoVilla">
+			  <slot name="icon"></slot>
+			</ButtonContact>
+			<ButtonContact Text="Mariano Luis Villa" Link="https://www.linkedin.com/in/mariano-luis-villa/?locale=en_US">
+			  <slot name="icon"></slot>
+			</ButtonContact>
+		  </div>
+		</div>
+	  </section>	  
 </main>
 </Layout>

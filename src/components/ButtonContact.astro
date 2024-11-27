@@ -1,0 +1,35 @@
+---
+// Props disponibles en el componente
+export interface Props {
+  Class?: string;
+  Icon?: boolean;
+  Text: string;
+  Link?: string;
+}
+
+const {
+  Class = 'font-poppins text-white group flex items-center p-2 sm:px-4 sm:py-2 rounded-lg text-sm sm:text-base md:text-lg transition-transform duration-500 hover:scale-110 hover:outline-accent outline-2 outline outline-primary',
+  Icon = true,
+  Text,
+  Link = '#',
+} = Astro.props;
+---
+
+<a
+  href={Link}
+  class={`flex items-center justify-center transition-transform duration-500 rounded-lg ${Class}`}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <!-- Ícono opcional -->
+  <span class="block sm:m-1 md:m-1" style={{ display: Astro.slots.icon ? 'block' : 'none' }}>
+    <slot name="icon" />
+  </span>
+  <!-- Texto del botón -->
+  <span
+    class="hidden md:hidden lg:block text-sm sm:text-base md:text-lg lg:text-xl font-medium transition-all ease-in-out"
+    style={{ display: Icon ? 'block' : 'none' }}
+  >
+    {Text}
+  </span>
+</a>

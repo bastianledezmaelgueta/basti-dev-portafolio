@@ -1,0 +1,53 @@
+---
+// Props disponibles en el componente
+export interface Props {
+  src: string;
+  src2: string;
+  alt?: string;
+}
+
+const {
+  src,
+  src2,
+  alt = 'Profile Image',
+} = Astro.props;
+
+let isSecondImageVisible = false;
+
+function toggleImage() {
+  isSecondImageVisible = !isSecondImageVisible;
+}
+
+function showSecondImage() {
+  isSecondImageVisible = true;
+}
+
+function hideSecondImage() {
+  isSecondImageVisible = false;
+}
+---
+
+<div class="flex justify-center items-center relative">
+  <!-- Primera imagen -->
+  <img
+    src={src}
+    alt={alt}
+    class={`object-cover w-36 h-36 sm:w-40 sm:h-40 md:w-60 md:h-60 lg:w-80 lg:h-80 shadow-lg shadow-primary transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent ${isSecondImageVisible ? 'hidden' : 'block'}`}
+    style="border-radius: 52% 48% 50% 50% / 25% 25% 75% 75%;"
+    onmouseenter={"showSecondImage()"}
+    onmouseleave={"hideSecondImage()"}
+    onclick={"toggleImage()"}
+  />
+
+  <!-- Segunda imagen -->
+  <img
+    src={src2}
+    alt={alt}
+    class={`object-cover w-36 h-36 sm:w-40 sm:h-40 md:w-60 md:h-60 lg:w-80 lg:h-80 shadow-lg shadow-primary transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent ${isSecondImageVisible ? 'block' : 'hidden'}`}
+    style="border-radius: 52% 48% 50% 50% / 25% 25% 75% 75%;"
+    onmouseenter={"showSecondImage"}
+    onmouseleave={"hideSecondImage"}
+    onclick={"toggleImage"}
+  />
+</div>
+
