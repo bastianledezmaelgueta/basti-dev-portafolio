@@ -1,0 +1,60 @@
+---
+// Este componente es reutilizable en Astro y crea un fondo interactivo estilo "Matrix Rain".
+---
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+</style>
+    <canvas id="matrixCanvas"></canvas>
+    <script>
+        // Configuración del canvas
+        const canvas = document.getElementById('matrixCanvas') as HTMLCanvasElement;
+        const context = canvas.getContext('2d');
+        
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Variables para el efecto
+        const fontSize = 16;
+        const columns = Math.floor(canvas.width / fontSize);
+        const drops = Array(columns).fill(0);
+        const str = "JavaScript Hacking Effect";
+
+        // Función para dibujar
+        const draw = () => {
+            context.fillStyle = "rgba(0, 0, 0, 0.05)";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            context.font = `${fontSize}px monospace`;
+            context.fillStyle = "#86C232";
+
+            for (let i = 0; i < columns; i++) {
+                const char = str[Math.floor(Math.random() * str.length)];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+                context.fillText(char, x, y);
+
+                if (y > canvas.height && Math.random() > 0.99) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        };
+
+        setInterval(draw, 35);
+    </script>
