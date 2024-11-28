@@ -22,3 +22,9 @@
 .border-effect {
   -webkit-text-stroke: 0.5px rgb(68, 67, 67); /* Grosor y color del borde */
 }
+
+.custom-input {
+  border: none; /* Elimina el borde gris */
+  outline: none; /* Elimina el efecto de enfoque azul */
+  background: none; /* Fondo transparente */
+}

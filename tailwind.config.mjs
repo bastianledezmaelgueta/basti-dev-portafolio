@@ -19,9 +19,7 @@ export default {
 				},
 			  },
 			fontFamily:{
-				sixtyfour: ['"Sixtyfour Convergence"', 'sans-serif'],
-				monomaniac: ['"Monomaniac One"', 'sans-serif'],
-				noto: ['"Noto Sans"', 'sans-serif'],
+				mono: ['Ubuntu Mono', 'monospace'],
 			}
 		},
 	},

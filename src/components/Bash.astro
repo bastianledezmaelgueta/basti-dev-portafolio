@@ -1,41 +1,162 @@
 ---
+// Console.astro
 import { Icon } from "astro-icon/components";
-import BashMessage from "./BashMessage.astro";
+
+interface Message {
+  text: string;
+  user: string;
+}
+
+let messages: Message[] = [];
 ---
 
-<div class="mx-auto rounded-lg border-umgreen-600 border-2 bg-black/50 text-justify">
+<style>
+  /* Agrega aquí tus estilos personalizados si es necesario */
+</style>
+
+<div
+  class="mx-auto rounded-lg border-umgreen-600 border-2 bg-black/75 text-justify font-mono"
+>
   <!-- Título de la ventana -->
   <div class="border-umgreen-600 border-b-2">
-    <h1 class="font-noto text-md sm:text-lg md:text-xl lg:text-2xl font-normal text-umgreen-500 mx-1 my-2">
+    <h1
+      class="text-md sm:text-lg md:text-xl lg:text-2xl font-normal text-umgreen-500 mx-2 my-2"
+    >
       WelcomeConsole.exe
     </h1>
   </div>
-  
-  <!-- Consola -->
-  <div>
-    <BashMessage text="User" user="user" />
+
+  <!-- Consola: renderizamos los mensajes -->
+  <div class="p-4 h-64 overflow-y-auto" id="messages">
+    <!-- Los mensajes se insertarán aquí -->
   </div>
 
   <!-- Input -->
-  <div class="text-left border-umgreen-600 border-t-2 flex items-center px-2 py-1">
-    <p class="font-noto text-md sm:text-lg md:text-xl lg:text-2xl font-normal text-umgreen-500 mr-2">
-      <span class="text-pink-700">User $</span>
+  <form
+    id="console-form"
+    class="text-left border-umgreen-600 border-t-2 flex items-center px-2 py-1"
+  >
+    <p class="text-md sm:text-lg md:text-xl lg:text-2xl text-umgreen-500 mx-2">
+      <span class="text-pink-700">User$</span>
     </p>
     <input
-      type="text"KF
+      type="text"
+      id="console-input"
       placeholder="/help"
-      class="bg-transparent placeholder:text-white flex-grow focus:outline-none hover:outline-none outline-none ring-0  shadow-inner text-white"
+      class="bg-black/50 flex-grow text-white border-2 rounded-lg border-umgreen-600 my-2"
     />
-    <button class="text-umgreen-500 ml-2 flex items-center justify-center">
+    <button
+      type="submit"
+      class="text-umgreen-500 ml-2 flex items-center justify-center hover:text-white"
+    >
       <span class="block sm:m-1 md:m-1">
-        <Icon name="astro" size="1.5rem" /> 
+        <Icon name="enter" size="1.5rem" />
       </span>
       <!-- Texto del botón -->
       <span
         class="hidden md:hidden lg:block text-sm sm:text-base md:text-lg lg:text-xl font-medium transition-all ease-in-out"
       >
-      Hola
+        Enviar
       </span>
     </button>
-  </div>
+  </form>
 </div>
+
+<!-- Script para manejar la interactividad -->
+<script type="module">
+  // Define la interfaz Message
+  /**
+   * @typedef {Object} Message
+   * @property {string} text - El texto del mensaje
+   * @property {string} user - El usuario que envía el mensaje
+   */
+
+  /** @type {Message[]} */
+  const messages = [];
+  const form = document.getElementById("console-form");
+  const input = document.getElementById("console-input");
+  const messagesContainer = document.getElementById("messages");
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const inputValue = input.value.trim();
+    if (inputValue === "") return;
+
+    // Agregar el mensaje del usuario
+    messages.push({ text: inputValue, user: "User" });
+    appendMessage({ text: inputValue, user: "User" });
+
+    let responseText = "";
+    // Generar respuesta del sistema
+    /** 
+    if (inputValue.toLowerCase() === '/help') {
+      responseText = 'Comandos disponibles: /help, /about, /contact';
+    } else if (inputValue.toLowerCase() === '/about') {
+      responseText = 'Esta es una consola de ejemplo creada con Astro.';
+    } else if (inputValue.toLowerCase() === '/contact') {
+      responseText = 'Puedes contactarnos en contacto@example.com';
+    } else {
+      responseText = `Comando no reconocido: ${inputValue}`;
+    }
+ */
+
+    /**  quiero un if que pregunte si el comando compieza con /go y despues un shiwcht que tome el valor despues del espacio para redireccionarlo a las paginas*/
+
+    switch (inputValue.toLowerCase()) {
+      case "/welcome":
+        responseText =
+          "Bienvenido a mi pagina web donde para compartir en mi viaje personal como desarrollador y en que me encuentro y demas cosas que comparto";
+        break;
+      case "/clear":
+        messages.length = 0;
+        messagesContainer.innerHTML = "";
+        responseText = "Pantalla limpia 🧼";
+        break;
+      case "/help":
+        responseText =
+          "/help:Muestra todos los comandos, /welcome:Mensaje de bienvenida, /clear: limpiar pantalla";
+        break;
+      case "/colipato":
+        responseText =
+          "colipato pal dani";
+        break;
+      default:
+        responseText =
+          "No se reconoce el comando " +
+          inputValue.toLowerCase() +
+          " Utiliza /help para ver los comandos";
+        break;
+    }
+
+    // Agregar el mensaje del sistema
+    messages.push({ text: responseText, user: "System" });
+    appendMessage({ text: responseText, user: "System" });
+
+    // Limpiar el input
+    input.value = "";
+  });
+
+  /**
+   * Agrega un mensaje al contenedor de mensajes
+   * @param {Message} message - El mensaje a agregar
+   */
+  function appendMessage(message) {
+    const messageElement = document.createElement("p");
+    messageElement.className = "text-white";
+
+    const userSpan = document.createElement("span");
+    userSpan.className =
+      message.user === "User" ? "text-pink-700" : "text-blue-500";
+    userSpan.textContent = `${message.user} $ `;
+    messageElement.appendChild(userSpan);
+
+    const textNode = document.createTextNode(message.text);
+    messageElement.appendChild(textNode);
+
+    messagesContainer.appendChild(messageElement);
+
+    // Desplazar hacia abajo
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+</script>
